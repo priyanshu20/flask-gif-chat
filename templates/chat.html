@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Chat room</title>
+  </head>
+  <body
+    class="bg-blue-800 space-y-2"
+    style="font-family: 'Raleway', sans-serif;"
+  >
+    <div class="navbar shadow-lg" data-room="{{room}}">
+      {{room}}
+    </div>
+    <div class="messages container mx-auto space-y-1 p-2">
+      {% for msg in messages %} {% if msg.room==room %}
+      <div class="message">
+        <div class="gif">
+          <img src="{{msg.gif}}" alt="Gif here" width="150px" />
+        </div>
+        <div class="message-container">
+          <div class="text">
+            {{msg.message}}
+          </div>
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+
+    <form
+      class="message-input-form container mx-auto flex space-x-2 p-2 shadow-sm"
+    >
+      <input
+        type="text"
+        class="message-input bg-blue-900 w-5/6 flex-9 text-gray-300 p-1"
+      />
+      <button class="bg-blue-900 w-full flex-1 text-gray-300">Send</button>
+    </form>
+
+    <script
+      src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+      integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../static/js/gifshot.js"></script>
+    <script src="../static/js/chat.js"></script>
+  </body>
+</html>

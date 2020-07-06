@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Gif Chat</title>
+  </head>
+  <body class="bg-blue-800" style="font-family: 'Raleway', sans-serif;">
+    <div class="navbar shadow-lg">Gif Chat</div>
+    <div
+      class="hero container max-w-sm mx-auto flex flex-col items-center my-40"
+    >
+      <div class="logo">
+        <img src="../static/logo.png" alt="Some logo here" width="200px" />
+      </div>
+      <form
+        class="=container mx-auto space-x-1 shadow-sm"
+        method="POST"
+        action="/chat"
+      >
+        <input
+          type="text"
+          class="bg-blue-900 w-full text-gray-300 p-1 placeholder-gray-300 text-left text-xl"
+          placeholder="Enter room name"
+          name="room"
+        />
+        <button class="bg-blue-900 text-gray-300" style="display: none;">
+          Send
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
