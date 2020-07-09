@@ -1,6 +1,12 @@
-# Gif Chat
+**HOSTED AT:** https://flaskgifchat.herokuapp.com/
 
-There are no emojis here,with every message its just your face on loop.
+
+# Gif Chat
+A chat application with public rooms where you can send messages witout a name, but with your face on loop
+
+## Todo
+* Loading old messages on scrolling , right now on reload only latest 4 messages are visible
+* support for browsers other than chrome
 
 #### Dependencies
 
