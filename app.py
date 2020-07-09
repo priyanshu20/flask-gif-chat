@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["SQLALCHEMY_DATABASE_URI"]
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 socketio = SocketIO(app)
@@ -37,9 +37,10 @@ def index():
 @app.route("/chat", methods=["POST"])
 def chat():
     room = request.form['room']
+    room = room.lower()
     print(room, flush=True)
     msg_list = Message.query.filter_by(
-        room="Python").order_by(Message.dtime.desc()).limit(4)
+        room=room).order_by(Message.dtime.desc()).limit(4)
     msg_list = msg_list[::-1]
     print(msg_list)
     return render_template("chat.html", room=room, messages=msg_list)

@@ -1,4 +1,4 @@
-var socket = io();
+var socket = io({ transports: ["websocket"] });
 var image = "";
 const roomData = document.querySelector(".navbar").dataset.room;
 console.log(roomData);
@@ -8,6 +8,20 @@ socket.on("connect", function () {
     room: roomData,
   });
 });
+
+let vid2 = document.querySelector("#vid");
+navigator.mediaDevices
+  .getUserMedia({
+    video: { facingMode: "user" },
+  })
+  .then((stream) => {
+    vid2.srcObject = stream;
+    vid2.onloadedmetadata = function (e) {
+      vid2.play(e);
+    };
+  });
+
+let progressBar = document.querySelector("progress");
 
 socket.on("join_room_broadcast", function (data) {
   console.log(`Room name -${roomData}`);
@@ -60,24 +74,28 @@ messageInputForm.onsubmit = function (e) {
         textBaseline: "bottom",
         sampleInterval: 10,
         numWorkers: 2,
+        progressCallback: function (captureProgress) {
+          progressBar.classList.remove("hidden");
+          progressBar.value = captureProgress;
+        },
       },
       function (obj) {
         if (!obj.error) {
+          console.log(`0th ${image.length}`);
           image = obj.image;
+          progressBar.classList.add("hidden");
+          progressBar.value = 0;
           console.log(`1st ${image.length}`);
+          socket.emit("send_message", {
+            room: roomData,
+            message: message,
+            gif: image,
+          });
+
+          messageInput.value = "";
+          messageInput.focus();
         }
       }
     );
-    console.log(`2nd ${image.length}`);
-    setTimeout(function () {
-      console.log(roomData);
-      socket.emit("send_message", {
-        room: roomData,
-        message: message,
-        gif: image,
-      });
-      messageInput.value = "";
-      messageInput.focus();
-    }, 2000);
   }
 };
